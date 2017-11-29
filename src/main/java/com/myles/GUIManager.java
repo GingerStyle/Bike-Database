@@ -15,7 +15,7 @@ public class GUIManager extends JFrame{
     protected JButton deleteBikeButton;
     protected JButton searchBikesButton;
     protected JButton addMileageButton;
-    protected JList bikeList;
+    protected JList<Bike> bikeList;
     protected JPanel mainPanel;
 
     DefaultListModel listModel;
@@ -29,7 +29,7 @@ public class GUIManager extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        listModel = new DefaultListModel<>();
+        listModel = new DefaultListModel<Bike>();
         bikeList.setModel(listModel);
         bikeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
