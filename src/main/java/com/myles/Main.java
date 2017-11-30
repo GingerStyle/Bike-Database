@@ -1,5 +1,7 @@
 package com.myles;
 
+import java.util.LinkedList;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -15,6 +17,7 @@ public class Main {
         }
 
         dbManager.createTable();
-        gui.jListDisplay();
+        LinkedList bikes = dbManager.getBikes();
+        gui.jListDisplay(bikes);
     }
 }

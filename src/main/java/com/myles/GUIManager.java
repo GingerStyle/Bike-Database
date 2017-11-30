@@ -1,8 +1,11 @@
 package com.myles;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class GUIManager extends JFrame{
     protected JTextField brandTextField;
@@ -28,6 +31,7 @@ public class GUIManager extends JFrame{
         pack();
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //setPreferredSize(new Dimension(500, 500));
 
         listModel = new DefaultListModel<Bike>();
         bikeList.setModel(listModel);
@@ -70,28 +74,30 @@ public class GUIManager extends JFrame{
                     return;
                 }
                 dbManager.addBike(brand, model, year, serial, color, Double.valueOf(mileage));
-                jListDisplay();
+                LinkedList bikes = dbManager.getBikes();
+                jListDisplay(bikes);
             }
         });
 
         deleteBikeButton.addActionListener(new ActionListener() {//toDo finish this
             public void actionPerformed(ActionEvent e) {
 
-                jListDisplay();
             }
         });
 
         addMileageButton.addActionListener(new ActionListener() {//toDo finish this
             public void actionPerformed(ActionEvent e) {
 
-                jListDisplay();
             }
         });
 
     }
 
-    protected void jListDisplay(){//toDo finish this method
-
+    protected void jListDisplay(LinkedList<Bike> bikes){
+        listModel.clear();
+        for(Bike x : bikes){
+            listModel.addElement(x);
+        }
     }
 
     protected void displayErrorMessage(String message){
