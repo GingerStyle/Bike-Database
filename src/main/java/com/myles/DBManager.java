@@ -5,17 +5,18 @@ import java.util.LinkedList;
 
 public class DBManager {
 
-    static String db_url = "jdbc:mysql://localhost:3306/bikes";//toDo get the database location
-    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";//toDo get the folder of where to put the driver
-    static String user = System.getenv("MYSQL_USER");//toDo find out if I need a username or password
-    static String password = System.getenv("MYSQL_PASSWORD");
+    static String db_url = "jdbc:sqlite:bikes.db";
+    static final String JDBC_DRIVER = "org.sqlite.JDBC";
 
     public void createTable(){
-        try (Connection connection = DriverManager.getConnection(db_url, user, password);
+        try (Connection connection = DriverManager.getConnection(db_url);
             Statement statement = connection.createStatement()){
 
             String createTable = "CREATE TABLE IF NOT EXISTS bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4),Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100))";
             statement.executeUpdate(createTable);
+
+            statement.close();
+            connection.close();
 
         }catch (SQLException sqle){
             sqle.printStackTrace();
@@ -24,7 +25,7 @@ public class DBManager {
 
     public void addBike(String brand, String model, String year, String serial, String color, double mileage){
 
-        try (Connection connection = DriverManager.getConnection(db_url, user, password)){
+        try (Connection connection = DriverManager.getConnection(db_url)){
 
             String insert = "INSERT INTO bike (Brand, Model, Year, Serial, Color, Mileage) VALUES(?, ?, ?, ?, ?, ?)";
             PreparedStatement prepStatement = connection.prepareStatement(insert);
@@ -36,29 +37,44 @@ public class DBManager {
             prepStatement.setDouble(6, mileage);
             prepStatement.executeUpdate();
 
-            connection.close();
             prepStatement.close();
+            connection.close();
 
         }catch(SQLException sqle){
             sqle.printStackTrace();
         }
     }
 
-    public void deleteBike(){ //toDo
+    public void deleteBike(String bike){ //toDo
 
+        try (Connection connection = DriverManager.getConnection(db_url)){
+
+            String delete = "DELETE FROM bike WHERE = ?";//todo finish this statement
+            PreparedStatement prepStatement = connection.prepareStatement(delete);
+            prepStatement.setString(1, bike);
+            prepStatement.executeUpdate();
+
+            prepStatement.close();
+            connection.close();
+
+        }catch(SQLException sqle){
+            sqle.printStackTrace();
+        }
     }
 
     public void addBikeMileage(double addMileage){ //toDo
 
-        try (Connection connection = DriverManager.getConnection(db_url, user, password)){
+        try (Connection connection = DriverManager.getConnection(db_url)){
 
             String query = "SELECT * FROM bike WHERE ";//toDo finish this statement
             PreparedStatement prepStatement = connection.prepareStatement(query);
+
+
             ResultSet results = prepStatement.executeQuery();
 
-            connection.close();
             prepStatement.close();
             results.close();
+            connection.close();
 
         }catch(SQLException sqle){
             sqle.printStackTrace();
@@ -68,7 +84,7 @@ public class DBManager {
     //gets information from the database, then creates bike objects which are then displayed in the Jlist by jListDisplay() in GUIManager
     public LinkedList<Bike> getBikes(){
         LinkedList<Bike> bikes = new LinkedList<>();
-        try(Connection connection = DriverManager.getConnection(db_url, user, password);
+        try(Connection connection = DriverManager.getConnection(db_url);
             Statement statement = connection.createStatement()){
 
             String getAll = "SELECT * FROM bike;";
@@ -85,9 +101,9 @@ public class DBManager {
                 bikes.add(bike);
             }
 
-            connection.close();
-            statement.close();
             results.close();
+            statement.close();
+            connection.close();
 
         }catch(SQLException sqle){
                 sqle.printStackTrace();

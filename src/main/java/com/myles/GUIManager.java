@@ -1,10 +1,8 @@
 package com.myles;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class GUIManager extends JFrame{
@@ -57,14 +55,14 @@ public class GUIManager extends JFrame{
                 String serial = serialTextField.getText();
                 if(serial.equals("")){
                     int yesNo = yesNoDialog("Are you sure you don't want to enter a serial number?");
-                    if(yesNo == 1){
+                    if(yesNo == 1){//todo make sure this works correctly
                         return;
                     }
                 }
                 String color = colorTextField.getText();
                 if(color.equals("")){
                     int yesNo = yesNoDialog("Are you sure you don't want to enter a color?");
-                    if(yesNo == 1){
+                    if(yesNo == 1){//todo make sure this works correctly
                         return;
                     }
                 }
@@ -81,7 +79,16 @@ public class GUIManager extends JFrame{
 
         deleteBikeButton.addActionListener(new ActionListener() {//toDo finish this
             public void actionPerformed(ActionEvent e) {
-
+                int index = bikeList.getSelectedIndex();
+                if(index != -1){
+                    int sure = yesNoDialog("Are you sure you want to delete this bike?");
+                    if(sure == JOptionPane.YES_OPTION){
+                        //todo get bike to delete and send to DBManager.deleteBike
+                        listModel.remove(index);
+                    }
+                }else {
+                    displayErrorMessage("Please select a bike from the list to delete it");
+                }
             }
         });
 
