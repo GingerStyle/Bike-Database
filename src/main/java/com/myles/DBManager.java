@@ -8,20 +8,8 @@ public class DBManager {
     static String db_url = "jdbc:sqlite:bikes.db";
     static final String JDBC_DRIVER = "org.sqlite.JDBC";
 
-    public void createTable(){
-        try (Connection connection = DriverManager.getConnection(db_url);
-            Statement statement = connection.createStatement()){
+    //CREATE TABLE bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4),Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100))";
 
-            String createTable = "CREATE TABLE IF NOT EXISTS bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4),Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100))";
-            statement.executeUpdate(createTable);
-
-            statement.close();
-            connection.close();
-
-        }catch (SQLException sqle){
-            sqle.printStackTrace();
-        }
-    }
 
     public void addBike(String brand, String model, String year, String serial, String color, double mileage){
 

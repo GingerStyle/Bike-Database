@@ -16,7 +16,6 @@ public class Main {
             System.exit(-1);  //No driver? Need to fix before anything else will work. So quit the program
         }
 
-        dbManager.createTable();
         LinkedList bikes = dbManager.getBikes();
         gui.jListDisplay(bikes);
     }
