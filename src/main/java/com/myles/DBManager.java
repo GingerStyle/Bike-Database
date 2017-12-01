@@ -10,6 +10,21 @@ public class DBManager {
 
     //CREATE TABLE bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4),Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100))";
 
+    public void openDB(){
+
+        try (Connection connection = DriverManager.getConnection(db_url);
+            Statement statement = connection.createStatement()){
+
+            String open = ".open bikes";
+            statement.executeQuery(open);
+
+            statement.close();
+            connection.close();
+
+        }catch(SQLException sqle){
+            sqle.printStackTrace();
+        }
+    }
 
     public void addBike(String brand, String model, String year, String serial, String color, double mileage){
 
@@ -94,7 +109,7 @@ public class DBManager {
             connection.close();
 
         }catch(SQLException sqle){
-                sqle.printStackTrace();
+            sqle.printStackTrace();
         }
         return bikes;
     }
