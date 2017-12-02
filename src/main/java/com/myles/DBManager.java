@@ -16,7 +16,7 @@ public class DBManager {
             Statement statement = connection.createStatement()){
 
             String open = ".open bikes";
-            statement.executeQuery(open);
+            statement.executeUpdate(open);
 
             statement.close();
             connection.close();
