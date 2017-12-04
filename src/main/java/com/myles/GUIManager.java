@@ -94,7 +94,7 @@ public class GUIManager extends JFrame{
 
         addMileageButton.addActionListener(new ActionListener() {//toDo finish this
             public void actionPerformed(ActionEvent e) {
-
+                int index = bikeList.getSelectedIndex();
             }
         });
 
