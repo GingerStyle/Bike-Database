@@ -10,6 +10,7 @@ public class DBManager {
 
     //CREATE TABLE bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4), Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100))";
 
+    //method that adds bike to the database
     public void addBike(String brand, String model, String year, String serial, String color, double mileage){
 
         try (Connection connection = DriverManager.getConnection(db_url)){
@@ -29,13 +30,14 @@ public class DBManager {
         }
     }
 
-    public void deleteBike(String bike){ //toDo
+    //method that deletes bikes from the database
+    public void deleteBike(String serial){
 
         try (Connection connection = DriverManager.getConnection(db_url)){
 
-            String delete = "DELETE FROM bike WHERE = ?";//todo finish this statement
+            String delete = "DELETE FROM bike WHERE Serial = ?";
             PreparedStatement prepStatement = connection.prepareStatement(delete);
-            prepStatement.setString(1, bike);
+            prepStatement.setString(1, serial);
             prepStatement.executeUpdate();
 
         }catch(SQLException sqle){
@@ -43,6 +45,7 @@ public class DBManager {
         }
     }
 
+    //method that updates the mileage to a bike in the database
     public void addBikeMileage(double addMileage){ //toDo
 
         try (Connection connection = DriverManager.getConnection(db_url)){

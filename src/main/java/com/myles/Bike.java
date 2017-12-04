@@ -5,6 +5,7 @@ public class Bike {
     private String brand;
     private String model;
     private String year;
+
     private String serial;
     private String color;
     private double mileage;
@@ -17,6 +18,8 @@ public class Bike {
         this.color = color;
         this.mileage = mileage;
     }
+
+    public String getSerial() { return serial; }
 
     @Override
     public String toString(){

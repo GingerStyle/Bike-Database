@@ -125,12 +125,12 @@
           <text value="Delete Bike"/>
         </properties>
       </component>
-      <component id="19fae" class="javax.swing.JButton" binding="searchBikesButton" default-binding="true">
+      <component id="19fae" class="javax.swing.JButton" binding="addMileageButton">
         <constraints>
           <grid row="4" column="3" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Search Bikes"/>
+          <text value="Add Mileage"/>
         </properties>
       </component>
       <scrollpane id="cf917">
@@ -146,14 +146,6 @@
           </component>
         </children>
       </scrollpane>
-      <component id="700b" class="javax.swing.JButton" binding="addMileageButton" default-binding="true">
-        <constraints>
-          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Add Mileage"/>
-        </properties>
-      </component>
     </children>
   </grid>
 </form>
