@@ -8,23 +8,7 @@ public class DBManager {
     static String db_url = "jdbc:sqlite:bikes.db";
     static final String JDBC_DRIVER = "org.sqlite.JDBC";
 
-    //CREATE TABLE bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4),Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100))";
-
-    public void openDB(){
-
-        try (Connection connection = DriverManager.getConnection(db_url);
-            Statement statement = connection.createStatement()){
-
-            String open = ".open bikes";
-            statement.executeUpdate(open);
-
-            statement.close();
-            connection.close();
-
-        }catch(SQLException sqle){
-            sqle.printStackTrace();
-        }
-    }
+    //CREATE TABLE bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4), Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100))";
 
     public void addBike(String brand, String model, String year, String serial, String color, double mileage){
 
@@ -40,9 +24,6 @@ public class DBManager {
             prepStatement.setDouble(6, mileage);
             prepStatement.executeUpdate();
 
-            prepStatement.close();
-            connection.close();
-
         }catch(SQLException sqle){
             sqle.printStackTrace();
         }
@@ -56,9 +37,6 @@ public class DBManager {
             PreparedStatement prepStatement = connection.prepareStatement(delete);
             prepStatement.setString(1, bike);
             prepStatement.executeUpdate();
-
-            prepStatement.close();
-            connection.close();
 
         }catch(SQLException sqle){
             sqle.printStackTrace();
@@ -75,9 +53,6 @@ public class DBManager {
 
             ResultSet results = prepStatement.executeQuery();
 
-            prepStatement.close();
-            results.close();
-            connection.close();
 
         }catch(SQLException sqle){
             sqle.printStackTrace();
@@ -103,10 +78,6 @@ public class DBManager {
                 Bike bike = new Bike(brand, model, year, serial, color, mileage);
                 bikes.add(bike);
             }
-
-            results.close();
-            statement.close();
-            connection.close();
 
         }catch(SQLException sqle){
             sqle.printStackTrace();
