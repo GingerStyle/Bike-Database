@@ -133,7 +133,7 @@ public class GUIManager extends JFrame{
     }
 
     //gets list of bike objects from DBManager.getbikes() and displays them
-    protected void jListDisplay(LinkedList<Bike> bikes){//todo make it display bikes in order by year
+    protected void jListDisplay(LinkedList<Bike> bikes){
         listModel.clear();
         for(Bike x : bikes){
             listModel.addElement(x);

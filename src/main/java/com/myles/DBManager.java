@@ -54,6 +54,7 @@ public class DBManager {
             PreparedStatement prepStatement = connection.prepareStatement(query);
             prepStatement.setDouble(1, addMileage);
             prepStatement.setString(2, serial);
+            prepStatement.execute();
 
         }catch(SQLException sqle){
             sqle.printStackTrace();
@@ -66,7 +67,7 @@ public class DBManager {
         try(Connection connection = DriverManager.getConnection(db_url);
             Statement statement = connection.createStatement()){
 
-            String getAll = "SELECT * FROM bike;";
+            String getAll = "SELECT * FROM bike ORDER BY Year DESC;";
             ResultSet results = statement.executeQuery(getAll);
 
             while(results.next()){
