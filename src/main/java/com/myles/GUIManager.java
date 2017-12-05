@@ -65,7 +65,7 @@ public class GUIManager extends JFrame{
                     return;
                 }
                 String mileage = mileageTextField.getText();
-                if(mileage.equals("")) {//todo make sure this is numeric data
+                if(mileage.equals("")) {//todo make sure numeric data was entered
                 displayErrorMessage("You must enter the mileage of the bike");
                 return;
                 }
@@ -112,7 +112,7 @@ public class GUIManager extends JFrame{
                 if(index != -1){
                     Bike selectedBike = bikeList.getSelectedValue();
                     //making sure data entered is numeric
-                    String addMileage = mileageTextField.getText();//todo make sure it is numeric data
+                    String addMileage = mileageTextField.getText();//todo make sure numeric data was entered
 
                     int sure = yesNoDialog("Are you sure you entered the correct mileage?");
                     if(sure == JOptionPane.YES_OPTION){
