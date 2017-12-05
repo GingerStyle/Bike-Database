@@ -46,16 +46,14 @@ public class DBManager {
     }
 
     //method that updates the mileage to a bike in the database
-    public void addBikeMileage(double addMileage){ //toDo
+    public void addBikeMileage(double addMileage, String serial){
 
         try (Connection connection = DriverManager.getConnection(db_url)){
 
-            String query = "SELECT * FROM bike WHERE ";//toDo finish this statement
+            String query = "UPDATE bike SET Mileage = ? WHERE Serial = ?";
             PreparedStatement prepStatement = connection.prepareStatement(query);
-
-
-            ResultSet results = prepStatement.executeQuery();
-
+            prepStatement.setDouble(1, addMileage);
+            prepStatement.setString(2, serial);
 
         }catch(SQLException sqle){
             sqle.printStackTrace();

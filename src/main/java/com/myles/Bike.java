@@ -5,7 +5,6 @@ public class Bike {
     private String brand;
     private String model;
     private String year;
-
     private String serial;
     private String color;
     private double mileage;
@@ -20,6 +19,8 @@ public class Bike {
     }
 
     public String getSerial() { return serial; }
+
+    public double getMileage() { return mileage; }
 
     @Override
     public String toString(){

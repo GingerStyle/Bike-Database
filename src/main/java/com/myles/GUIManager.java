@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 public class GUIManager extends JFrame{
+
     protected JTextField brandTextField;
     protected JTextField modelTextField;
     protected JTextField yearTextField;
@@ -64,7 +65,7 @@ public class GUIManager extends JFrame{
                     return;
                 }
                 String mileage = mileageTextField.getText();
-                if(mileage.equals("")) {
+                if(mileage.equals("")) {//todo make sure this is numeric data
                 displayErrorMessage("You must enter the mileage of the bike");
                 return;
                 }
@@ -86,6 +87,7 @@ public class GUIManager extends JFrame{
         //controls what happens when you press the delete button
         deleteBikeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                //making sure that something was selected
                 int index = bikeList.getSelectedIndex();
                 if(index != -1){
                     Bike selectedBike = bikeList.getSelectedValue();
@@ -103,16 +105,35 @@ public class GUIManager extends JFrame{
         });
 
         //controls what happens when you press the add mileage button
-        addMileageButton.addActionListener(new ActionListener() {//toDo finish this
+        addMileageButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                //making sure something was selected
+                int index = bikeList.getSelectedIndex();
+                if(index != -1){
+                    Bike selectedBike = bikeList.getSelectedValue();
+                    //making sure data entered is numeric
+                    String addMileage = mileageTextField.getText();//todo make sure it is numeric data
 
+                    int sure = yesNoDialog("Are you sure you entered the correct mileage?");
+                    if(sure == JOptionPane.YES_OPTION){
+                        String serial = selectedBike.getSerial();
+                        double mileage = selectedBike.getMileage();
+                        mileage += Double.valueOf(addMileage);
+                        dbManager.addBikeMileage(mileage, serial);
+                        LinkedList<Bike> bikes = dbManager.getBikes();
+                        jListDisplay(bikes);
+                        mileageTextField.setText("");
+                    }
+                }else{
+                    displayErrorMessage("Please select a bike from the list to update");
+                }
             }
         });
 
     }
 
     //gets list of bike objects from DBManager.getbikes() and displays them
-    protected void jListDisplay(LinkedList<Bike> bikes){
+    protected void jListDisplay(LinkedList<Bike> bikes){//todo make it display bikes in order by year
         listModel.clear();
         for(Bike x : bikes){
             listModel.addElement(x);
