@@ -93,8 +93,8 @@ public class GUIManager extends JFrame{
                     Bike selectedBike = bikeList.getSelectedValue();
                     int sure = yesNoDialog("Are you sure you want to delete this bike?");
                     if(sure == JOptionPane.YES_OPTION){
-                        String serial = selectedBike.getSerial();
-                        dbManager.deleteBike(serial);
+                        int id = selectedBike.getId();
+                        dbManager.deleteBike(id);
                         LinkedList<Bike> bikes = dbManager.getBikes();
                         jListDisplay(bikes);
                     }
@@ -116,10 +116,10 @@ public class GUIManager extends JFrame{
 
                     int sure = yesNoDialog("Are you sure you entered the correct mileage?");
                     if(sure == JOptionPane.YES_OPTION){
-                        String serial = selectedBike.getSerial();
+                        int id = selectedBike.getId();
                         double mileage = selectedBike.getMileage();
                         mileage += Double.valueOf(addMileage);
-                        dbManager.addBikeMileage(mileage, serial);
+                        dbManager.addBikeMileage(id, mileage);
                         LinkedList<Bike> bikes = dbManager.getBikes();
                         jListDisplay(bikes);
                         mileageTextField.setText("");

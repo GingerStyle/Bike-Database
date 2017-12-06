@@ -2,6 +2,7 @@ package com.myles;
 
 public class Bike {
 
+    private int id;
     private String brand;
     private String model;
     private String year;
@@ -9,7 +10,8 @@ public class Bike {
     private String color;
     private double mileage;
 
-    public Bike(String brand, String model, String year, String serial, String color, double mileage){
+    public Bike(int id, String brand, String model, String year, String serial, String color, double mileage){
+        this.id = id;
         this.brand = brand;
         this.model = model;
         this.year = year;
@@ -21,6 +23,8 @@ public class Bike {
     public String getSerial() { return serial; }
 
     public double getMileage() { return mileage; }
+
+    public int getId() { return id; }
 
     @Override
     public String toString(){

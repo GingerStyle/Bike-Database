@@ -31,13 +31,13 @@ public class DBManager {
     }
 
     //method that deletes bikes from the database
-    public void deleteBike(String serial){
+    public void deleteBike(int id){
 
         try (Connection connection = DriverManager.getConnection(db_url)){
 
-            String delete = "DELETE FROM bike WHERE Serial = ?";
+            String delete = "DELETE FROM bike WHERE id = ?";
             PreparedStatement prepStatement = connection.prepareStatement(delete);
-            prepStatement.setString(1, serial);
+            prepStatement.setInt(1, id);
             prepStatement.executeUpdate();
 
         }catch(SQLException sqle){
@@ -46,14 +46,14 @@ public class DBManager {
     }
 
     //method that updates the mileage to a bike in the database
-    public void addBikeMileage(double addMileage, String serial){
+    public void addBikeMileage(int id, double addMileage){
 
         try (Connection connection = DriverManager.getConnection(db_url)){
 
-            String query = "UPDATE bike SET Mileage = ? WHERE Serial = ?";
+            String query = "UPDATE bike SET Mileage = ? WHERE id = ?";
             PreparedStatement prepStatement = connection.prepareStatement(query);
             prepStatement.setDouble(1, addMileage);
-            prepStatement.setString(2, serial);
+            prepStatement.setInt(2, id);
             prepStatement.execute();
 
         }catch(SQLException sqle){
@@ -67,17 +67,18 @@ public class DBManager {
         try(Connection connection = DriverManager.getConnection(db_url);
             Statement statement = connection.createStatement()){
 
-            String getAll = "SELECT * FROM bike ORDER BY Year DESC;";
+            String getAll = "SELECT * FROM bike ORDER BY Brand ASC, Year DESC";
             ResultSet results = statement.executeQuery(getAll);
 
             while(results.next()){
+                int id = results.getInt("id");
                 String brand = results.getString("Brand");
                 String model = results.getString("Model");
                 String year = results.getString("Year");
                 String serial = results.getString("Serial");
                 String color = results.getString("Color");
                 double mileage = results.getDouble("Mileage");
-                Bike bike = new Bike(brand, model, year, serial, color, mileage);
+                Bike bike = new Bike(id, brand, model, year, serial, color, mileage);
                 bikes.add(bike);
             }
 
