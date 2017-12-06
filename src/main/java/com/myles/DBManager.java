@@ -61,13 +61,13 @@ public class DBManager {
         }
     }
 
-    //gets information from the database, then creates bike objects which are then displayed in the Jlist by jListDisplay() in GUIManager
+    //gets information from the database, then creates bike objects which are then displayed in the jList by jListDisplay() in GUIManager
     public LinkedList<Bike> getBikes(){
         LinkedList<Bike> bikes = new LinkedList<>();
         try(Connection connection = DriverManager.getConnection(db_url);
             Statement statement = connection.createStatement()){
 
-            String getAll = "SELECT * FROM bike ORDER BY Brand ASC, Year DESC";
+            String getAll = "SELECT * FROM bike ORDER BY Brand ASC, Model ASC, Year DESC";
             ResultSet results = statement.executeQuery(getAll);
 
             while(results.next()){
@@ -86,5 +86,30 @@ public class DBManager {
             sqle.printStackTrace();
         }
         return bikes;
+    }
+
+    //method to get the picture to display
+    public String getPicture(int id){
+        String filePath = "";
+        try(Connection connection = DriverManager.getConnection(db_url)){
+
+            String getFilePath = "SELECT * FROM bike Where id = ?";
+            PreparedStatement prepStatement = connection.prepareStatement(getFilePath);
+            prepStatement.setInt(1, id);
+            ResultSet results = prepStatement.executeQuery();
+
+            while (results.next()){
+                filePath = results.getString("Photo");
+            }
+
+        }catch(SQLException sqle){
+            sqle.printStackTrace();
+        }
+        return filePath;
+    }
+
+    //method to set the picture file path in the database
+    public void setPicture(){//todo finish this
+
     }
 }

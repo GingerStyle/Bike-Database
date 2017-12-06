@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 public class GUIManager extends JFrame{
 
+    //main panel elements
     protected JTextField brandTextField;
     protected JTextField modelTextField;
     protected JTextField yearTextField;
@@ -18,6 +19,10 @@ public class GUIManager extends JFrame{
     protected JButton addMileageButton;
     protected JList<Bike> bikeList;
     protected JPanel mainPanel;
+    //picture panel elements
+    protected JPanel picturePanel;
+    protected JLabel pictureLabel;
+    protected JButton addPictureButton;
 
     DefaultListModel listModel;
 
@@ -30,6 +35,9 @@ public class GUIManager extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //setPreferredSize(new Dimension(500, 500));
+
+        //ImageIcon bikeIcon = new ImageIcon("cat.png");   // TODO exception handling for file not found
+        //pictureLabel.setIcon(bikeIcon);
 
         listModel = new DefaultListModel<Bike>();
         bikeList.setModel(listModel);
@@ -163,6 +171,15 @@ public class GUIManager extends JFrame{
                 }
             }
         });
+
+        addPictureButton.addActionListener(new ActionListener() {//todo finish this
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        //todo add listener that will show the bike picture when you click on a bike
 
     }
 
