@@ -109,7 +109,18 @@ public class DBManager {
     }
 
     //method to set the picture file path in the database
-    public void setPicture(){//todo finish this
+    public void setPicture(String path, int id){
 
+        try (Connection connection = DriverManager.getConnection(db_url)){
+
+            String query = "UPDATE bike SET Photo = ? WHERE id = ?";
+            PreparedStatement prepStatement = connection.prepareStatement(query);
+            prepStatement.setString(1, path);
+            prepStatement.setInt(2, id);
+            prepStatement.execute();
+
+        }catch(SQLException sqle){
+            sqle.printStackTrace();
+        }
     }
 }
