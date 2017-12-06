@@ -20,8 +20,7 @@ public class Bike {
         this.mileage = mileage;
     }
 
-    public String getSerial() { return serial; }
-
+    //get methods
     public double getMileage() { return mileage; }
 
     public int getId() { return id; }

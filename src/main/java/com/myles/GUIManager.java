@@ -1,6 +1,8 @@
 package com.myles;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -35,9 +37,6 @@ public class GUIManager extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //setPreferredSize(new Dimension(500, 500));
-
-        //ImageIcon bikeIcon = new ImageIcon("cat.png");   // TODO exception handling for file not found
-        //pictureLabel.setIcon(bikeIcon);
 
         listModel = new DefaultListModel<Bike>();
         bikeList.setModel(listModel);
@@ -172,18 +171,38 @@ public class GUIManager extends JFrame{
             }
         });
 
+        //controls what happens when you press the add/change picture button
         addPictureButton.addActionListener(new ActionListener() {//todo finish this
             @Override
             public void actionPerformed(ActionEvent e) {
+                int index = bikeList.getSelectedIndex();
+                if(index != -1){
 
+                }else{
+                    displayErrorMessage("Please select a bike from the list to add a picture to it");
+                }
             }
         });
 
-        //todo add listener that will show the bike picture when you click on a bike
+        //displays the stored picture when you click on a bike in the list
+        bikeList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                Bike selectedBike = bikeList.getSelectedValue();
+                int id = selectedBike.getId();
+                String path = dbManager.getPicture(id);
+                if(path.equals("")){//todo fix this statement
+                    pictureLabel.setText("No File");
+                }else{
+                    ImageIcon bikeIcon = new ImageIcon(path);
+                    pictureLabel.setIcon(bikeIcon);
+                }
+            }
+        });
 
     }
 
-    //gets list of bike objects from DBManager.getbikes() and displays them
+    //gets list of bike objects from DBManager.getBikes() and displays them
     protected void jListDisplay(LinkedList<Bike> bikes){
         listModel.clear();
         for(Bike x : bikes){
