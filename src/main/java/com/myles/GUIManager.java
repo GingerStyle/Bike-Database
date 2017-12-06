@@ -191,8 +191,8 @@ public class GUIManager extends JFrame{
                 Bike selectedBike = bikeList.getSelectedValue();
                 int id = selectedBike.getId();
                 String path = dbManager.getPicture(id);
-                if(path.equals("")){//todo fix this statement
-                    pictureLabel.setText("No File");
+                if(path == null){
+                    pictureLabel.setText("No Picture File");
                 }else{
                     ImageIcon bikeIcon = new ImageIcon(path);
                     pictureLabel.setIcon(bikeIcon);
