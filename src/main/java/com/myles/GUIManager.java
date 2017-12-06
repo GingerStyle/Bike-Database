@@ -38,37 +38,66 @@ public class GUIManager extends JFrame{
         //controls what happens when you press the add bike button
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //making sure all fields are filled
+                //data validation for brandTextField
                 String brand = brandTextField.getText();
                 if (brand.equals("")) {
                     displayErrorMessage("You must enter a brand name");
                     return;
                 }
+
+                //data validation for the modelTextField
                 String model = modelTextField.getText();
                 if (model.equals("")) {
                     displayErrorMessage("You must enter a model name");
                     return;
                 }
+
+                //data validation for the yearTextField
                 String year = yearTextField.getText();
                 if (year.equals("")) {
                     displayErrorMessage("You must enter a year");
                     return;
                 }
+                if (year.length() != 4){
+                    displayErrorMessage("You must use a four digit year");
+                    return;
+                }else {
+                    for (char x : year.toCharArray()){
+                        if (!Character.isDigit(x)){
+                            displayErrorMessage("The year must contain only numbers");
+                            return;
+                        }
+                    }
+                }
+
+                //data validation for the serialTextField
                 String serial = serialTextField.getText();
                 if (serial.equals("")) {
                     displayErrorMessage("You must enter a serial number");
                     return;
                 }
+
+                //data validation for the colorTextField
                 String color = colorTextField.getText();
                 if (color.equals("")) {
                     displayErrorMessage("you must enter a color");
                     return;
                 }
+
+                //data validation for the mileageTextField
                 String mileage = mileageTextField.getText();
-                if(mileage.equals("")) {//todo make sure numeric data was entered
+                if(mileage.equals("")) {
                 displayErrorMessage("You must enter the mileage of the bike");
                 return;
+                }else{
+                    for (char x : mileage.toCharArray()){
+                        if (!Character.isDigit(x)){
+                            displayErrorMessage("The mileage can only contain numbers");
+                            return;
+                        }
+                    }
                 }
+
                 //adding bike to the database
                 dbManager.addBike(brand,model,year,serial,color,Double.valueOf(mileage));
                 //updating the displayed list with what is in the database
@@ -112,8 +141,13 @@ public class GUIManager extends JFrame{
                 if(index != -1){
                     Bike selectedBike = bikeList.getSelectedValue();
                     //making sure data entered is numeric
-                    String addMileage = mileageTextField.getText();//todo make sure numeric data was entered
-
+                    String addMileage = mileageTextField.getText();
+                    for (char x : addMileage.toCharArray()){
+                        if (!Character.isDigit(x)){
+                            displayErrorMessage("The mileage can only contain numbers");
+                            return;
+                        }
+                    }
                     int sure = yesNoDialog("Are you sure you entered the correct mileage?");
                     if(sure == JOptionPane.YES_OPTION){
                         int id = selectedBike.getId();
@@ -123,7 +157,7 @@ public class GUIManager extends JFrame{
                         LinkedList<Bike> bikes = dbManager.getBikes();
                         jListDisplay(bikes);
                         mileageTextField.setText("");
-                    }
+                        }
                 }else{
                     displayErrorMessage("Please select a bike from the list to update");
                 }
