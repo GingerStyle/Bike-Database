@@ -24,7 +24,7 @@ public class GUIManager extends JFrame{
     //picture panel elements
     protected JPanel picturePanel;
     protected JLabel pictureLabel;
-    protected JButton addPictureButton;
+    protected JButton addPhotoButton;
 
     DefaultListModel listModel;
 
@@ -98,7 +98,7 @@ public class GUIManager extends JFrame{
                 return;
                 }else{
                     for (char x : mileage.toCharArray()){
-                        if (!Character.isDigit(x)){
+                        if (!Character.isDigit(x) && x != '.'){
                             displayErrorMessage("The mileage can only contain numbers");
                             return;
                         }
@@ -150,7 +150,7 @@ public class GUIManager extends JFrame{
                     //making sure data entered is numeric
                     String addMileage = mileageTextField.getText();
                     for (char x : addMileage.toCharArray()){
-                        if (!Character.isDigit(x)){
+                        if (!Character.isDigit(x) && x != '.'){
                             displayErrorMessage("The mileage can only contain numbers");
                             return;
                         }
@@ -172,7 +172,7 @@ public class GUIManager extends JFrame{
         });
 
         //controls what happens when you press the add/change picture button
-        addPictureButton.addActionListener(new ActionListener() {//todo finish this
+        addPhotoButton.addActionListener(new ActionListener() {//todo finish this
             @Override
             public void actionPerformed(ActionEvent e) {
                 int index = bikeList.getSelectedIndex();
