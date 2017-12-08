@@ -3,8 +3,11 @@ package com.myles;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.LinkedList;
 
 public class GUIManager extends JFrame{
@@ -33,10 +36,11 @@ public class GUIManager extends JFrame{
     public GUIManager(){
 
         setContentPane(mainPanel);
+        setPreferredSize(new Dimension(900, 310));
         pack();
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //setPreferredSize(new Dimension(500, 500));
+
 
         listModel = new DefaultListModel<Bike>();
         bikeList.setModel(listModel);
@@ -172,12 +176,27 @@ public class GUIManager extends JFrame{
         });
 
         //controls what happens when you press the add/change picture button
-        addPhotoButton.addActionListener(new ActionListener() {//todo finish this
+        addPhotoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //make sure something is selected
                 int index = bikeList.getSelectedIndex();
                 if(index != -1){
-
+                    //allow the user to browse their files and select a picture
+                    JFileChooser chooser = new JFileChooser();
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, GIF, and PNG Images", "jpg", "gif", "png");
+                    chooser.setFileFilter(filter);
+                    int chosen = chooser.showOpenDialog(GUIManager.this);
+                    //if they select something then save it to the database and display it
+                    if(chosen == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = chooser.getSelectedFile();
+                        String path = selectedFile.toString();
+                        Bike selectedBike = bikeList.getSelectedValue();
+                        selectedBike.setPath(path);//update object already in the jList then you don't have to update the whole list
+                        int id = selectedBike.getId();
+                        dbManager.setPicture(path, id);
+                        displayPicture(path);
+                    }
                 }else{
                     displayErrorMessage("Please select a bike from the list to add a picture to it");
                 }
@@ -185,17 +204,20 @@ public class GUIManager extends JFrame{
         });
 
         //displays the stored picture when you click on a bike in the list
-        bikeList.addListSelectionListener(new ListSelectionListener() {//todo add check if file is not found
+        bikeList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 Bike selectedBike = bikeList.getSelectedValue();
-                int id = selectedBike.getId();
-                String path = dbManager.getPicture(id);
+                String path = selectedBike.getPath();
+                File filePath = new File(path);
                 if(path == null){
+                    pictureLabel.setIcon(null);
                     pictureLabel.setText("No photo on file");
+                }else if(!filePath.exists()){
+                    pictureLabel.setIcon(null);
+                    pictureLabel.setText("Missing file");
                 }else{
-                    ImageIcon bikeIcon = new ImageIcon(path);
-                    pictureLabel.setIcon(bikeIcon);
+                    displayPicture(path);
                 }
             }
         });
@@ -208,6 +230,17 @@ public class GUIManager extends JFrame{
         for(Bike x : bikes){
             listModel.addElement(x);
         }
+    }
+
+    //used to handle scaling and displays pictures
+    protected void displayPicture(String filePath){
+        //clear picture
+        pictureLabel.setText("");
+        pictureLabel.setIcon(null);
+        //scale the picture
+        ImageIcon bikeIcon = new ImageIcon(new ImageIcon(filePath).getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH));
+        //display the picture
+        pictureLabel.setIcon(bikeIcon);
     }
 
     protected void displayErrorMessage(String message){

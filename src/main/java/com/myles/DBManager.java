@@ -78,7 +78,8 @@ public class DBManager {
                 String serial = results.getString("Serial");
                 String color = results.getString("Color");
                 double mileage = results.getDouble("Mileage");
-                Bike bike = new Bike(id, brand, model, year, serial, color, mileage);
+                String path = results.getString("Photo");
+                Bike bike = new Bike(id, brand, model, year, serial, color, mileage, path);
                 bikes.add(bike);
             }
 

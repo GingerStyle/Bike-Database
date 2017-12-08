@@ -9,8 +9,9 @@ public class Bike {
     private String serial;
     private String color;
     private double mileage;
+    private String path;
 
-    public Bike(int id, String brand, String model, String year, String serial, String color, double mileage){
+    public Bike(int id, String brand, String model, String year, String serial, String color, double mileage, String path){
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -18,12 +19,18 @@ public class Bike {
         this.serial = serial;
         this.color = color;
         this.mileage = mileage;
+        this.path = path;
     }
 
     //get methods
     public double getMileage() { return mileage; }
 
     public int getId() { return id; }
+
+    public String getPath() { return path; }
+
+    //set methods
+    public void setPath(String path) { this.path = path; }
 
     @Override
     public String toString(){
