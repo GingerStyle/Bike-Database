@@ -16,7 +16,8 @@ public class Main {
             System.exit(-1);  //No driver? Need to fix before anything else will work. So quit the program
         }
 
-        LinkedList bikes = dbManager.getBikes();
+        LinkedList<Bike> bikes = dbManager.getBikes();
         gui.jListDisplay(bikes);
+        gui.displayPicture("Title Image.png");
     }
 }

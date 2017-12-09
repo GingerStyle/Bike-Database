@@ -28,6 +28,11 @@ public class GUIManager extends JFrame{
     protected JPanel picturePanel;
     protected JLabel pictureLabel;
     protected JButton addPhotoButton;
+    //maintenance panel elements
+    private JList maintenanceRecordList;
+    private JButton addRecordButton;
+    private JButton deleteRecordButton;
+    private JPanel maintenancePanel;
 
     DefaultListModel listModel;
 
@@ -36,7 +41,8 @@ public class GUIManager extends JFrame{
     public GUIManager(){
 
         setContentPane(mainPanel);
-        setPreferredSize(new Dimension(900, 310));
+        setPreferredSize(new Dimension(900, 500));
+        this.setTitle("Bike Maintenance Database");
         pack();
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -68,8 +74,7 @@ public class GUIManager extends JFrame{
                 if (year.equals("")) {
                     displayErrorMessage("You must enter a year");
                     return;
-                }
-                if (year.length() != 4){
+                }else if (year.length() != 4){
                     displayErrorMessage("You must use a four digit year");
                     return;
                 }else {
@@ -112,7 +117,7 @@ public class GUIManager extends JFrame{
                 //adding bike to the database
                 dbManager.addBike(brand,model,year,serial,color,Double.valueOf(mileage));
                 //updating the displayed list with what is in the database
-                LinkedList bikes = dbManager.getBikes();
+                LinkedList<Bike> bikes = dbManager.getBikes();
                 jListDisplay(bikes);
                 //clearing the jTextFields
                 brandTextField.setText("");
@@ -153,6 +158,10 @@ public class GUIManager extends JFrame{
                     Bike selectedBike = bikeList.getSelectedValue();
                     //making sure data entered is numeric
                     String addMileage = mileageTextField.getText();
+                    if(addMileage.equals("")){
+                        displayErrorMessage("Enter the mileage in the Mileage text box");
+                        return;
+                    }
                     for (char x : addMileage.toCharArray()){
                         if (!Character.isDigit(x) && x != '.'){
                             displayErrorMessage("The mileage can only contain numbers");
@@ -209,11 +218,11 @@ public class GUIManager extends JFrame{
             public void valueChanged(ListSelectionEvent e) {
                 Bike selectedBike = bikeList.getSelectedValue();
                 String path = selectedBike.getPath();
-                File filePath = new File(path);
+
                 if(path == null){
                     pictureLabel.setIcon(null);
                     pictureLabel.setText("No photo on file");
-                }else if(!filePath.exists()){
+                }else if(!new File(path).exists()){
                     pictureLabel.setIcon(null);
                     pictureLabel.setText("Missing file");
                 }else{
@@ -243,11 +252,11 @@ public class GUIManager extends JFrame{
         pictureLabel.setIcon(bikeIcon);
     }
 
-    protected void displayErrorMessage(String message){
+    private void displayErrorMessage(String message){
         JOptionPane.showMessageDialog(this, message);
     }
 
-    protected int yesNoDialog(String message) {
+    private int yesNoDialog(String message) {
         return JOptionPane.showConfirmDialog(this, message, null, JOptionPane.YES_NO_OPTION);
     }
 }
