@@ -8,7 +8,8 @@ public class DBManager {
     static String db_url = "jdbc:sqlite:bikes.db";
     static final String JDBC_DRIVER = "org.sqlite.JDBC";
 
-    //CREATE TABLE bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4), Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100))";
+    //CREATE TABLE bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4), Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100));
+    //CREATE TABLE IF NOT EXISTS ? (Date varchar(10), )
 
     //method that adds bike to the database
     public void addBike(String brand, String model, String year, String serial, String color, double mileage){
