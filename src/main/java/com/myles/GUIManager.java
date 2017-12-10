@@ -102,16 +102,23 @@ public class GUIManager extends JFrame{
 
                 //data validation for the mileageTextField
                 String mileage = mileageTextField.getText();
+                int decimal = 0;
                 if(mileage.equals("")) {
                 displayErrorMessage("You must enter the mileage of the bike");
                 return;
-                }else{
+                }else {
                     for (char x : mileage.toCharArray()){
                         if (!Character.isDigit(x) && x != '.'){
                             displayErrorMessage("The mileage can only contain numbers");
                             return;
+                        }else if(x == '.'){
+                            decimal++;
                         }
                     }
+                }
+                if (decimal > 1){
+                    displayErrorMessage("You have more than one decimal point in Mileage");
+                    return;
                 }
 
                 //adding bike to the database
@@ -136,12 +143,13 @@ public class GUIManager extends JFrame{
                 int index = bikeList.getSelectedIndex();
                 if(index != -1){
                     Bike selectedBike = bikeList.getSelectedValue();
-                    int sure = yesNoDialog("Are you sure you want to delete this bike?");
+                    int sure = yesNoDialog("Are you sure you want to delete this bike?\n" + selectedBike);
                     if(sure == JOptionPane.YES_OPTION){
                         int id = selectedBike.getId();
                         dbManager.deleteBike(id);
                         LinkedList<Bike> bikes = dbManager.getBikes();
                         jListDisplay(bikes);
+                        displayPicture("Title Image.png");
                     }
                 }else {
                     displayErrorMessage("Please select a bike from the list to delete it");
@@ -154,21 +162,30 @@ public class GUIManager extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //making sure something was selected
                 int index = bikeList.getSelectedIndex();
+                int decimal = 0;
                 if(index != -1){
                     Bike selectedBike = bikeList.getSelectedValue();
-                    //making sure data entered is numeric
+                    //making sure something was entered
                     String addMileage = mileageTextField.getText();
                     if(addMileage.equals("")){
                         displayErrorMessage("Enter the mileage in the Mileage text box");
                         return;
                     }
+                    //making sure data entered is numeric or a decimal
                     for (char x : addMileage.toCharArray()){
                         if (!Character.isDigit(x) && x != '.'){
                             displayErrorMessage("The mileage can only contain numbers");
                             return;
+                        }else if (x == '.'){
+                            decimal++;
                         }
                     }
-                    int sure = yesNoDialog("Are you sure you entered the correct mileage?");
+                    //making sure no more than one decimal is entered
+                    if (decimal > 1){
+                        displayErrorMessage("You have more than one decimal point in Mileage");
+                        return;
+                    }
+                    int sure = yesNoDialog("Are you sure you entered the correct mileage?\nYou entered: " + mileageTextField.getText());
                     if(sure == JOptionPane.YES_OPTION){
                         int id = selectedBike.getId();
                         double mileage = selectedBike.getMileage();
@@ -217,6 +234,7 @@ public class GUIManager extends JFrame{
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 Bike selectedBike = bikeList.getSelectedValue();
+                if(selectedBike == null) {return;}
                 String path = selectedBike.getPath();
 
                 //checking that there is a file path in the database and that the file exists
