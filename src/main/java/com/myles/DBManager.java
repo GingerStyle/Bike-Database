@@ -8,7 +8,7 @@ public class DBManager {
     static String db_url = "jdbc:sqlite:bikes.db";
     static final String JDBC_DRIVER = "org.sqlite.JDBC";
 
-    //CREATE TABLE bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4), Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100));
+    //Schema for the bike table: bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4), Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100));
     //CREATE TABLE IF NOT EXISTS ? (Date varchar(10), )
 
     //method that adds bike to the database
@@ -88,26 +88,6 @@ public class DBManager {
             sqle.printStackTrace();
         }
         return bikes;
-    }
-
-    //method to get the picture to display
-    public String getPicture(int id){
-        String filePath = "";
-        try(Connection connection = DriverManager.getConnection(db_url)){
-
-            String getFilePath = "SELECT * FROM bike Where id = ?";
-            PreparedStatement prepStatement = connection.prepareStatement(getFilePath);
-            prepStatement.setInt(1, id);
-            ResultSet results = prepStatement.executeQuery();
-
-            while (results.next()){
-                filePath = results.getString("Photo");
-            }
-
-        }catch(SQLException sqle){
-            sqle.printStackTrace();
-        }
-        return filePath;
     }
 
     //method to set the picture file path in the database

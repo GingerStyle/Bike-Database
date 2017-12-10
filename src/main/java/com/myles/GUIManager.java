@@ -29,14 +29,14 @@ public class GUIManager extends JFrame{
     protected JLabel pictureLabel;
     protected JButton addPhotoButton;
     //maintenance panel elements
-    private JList maintenanceRecordList;
-    private JButton addRecordButton;
-    private JButton deleteRecordButton;
-    private JPanel maintenancePanel;
+    protected JList maintenanceRecordList;
+    protected JButton addRecordButton;
+    protected JButton deleteRecordButton;
+    protected JPanel maintenancePanel;
 
-    DefaultListModel listModel;
+    private DefaultListModel listModel;
 
-    DBManager dbManager = new DBManager();
+    private DBManager dbManager = new DBManager();
 
     public GUIManager(){
 
@@ -219,6 +219,7 @@ public class GUIManager extends JFrame{
                 Bike selectedBike = bikeList.getSelectedValue();
                 String path = selectedBike.getPath();
 
+                //checking that there is a file path in the database and that the file exists
                 if(path == null){
                     pictureLabel.setIcon(null);
                     pictureLabel.setText("No photo on file");
