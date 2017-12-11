@@ -96,7 +96,7 @@ public class GUIManager extends JFrame{
                 //data validation for the colorTextField
                 String color = colorTextField.getText();
                 if (color.equals("")) {
-                    displayErrorMessage("you must enter a color");
+                    displayErrorMessage("You must enter a color");
                     return;
                 }
 
@@ -195,6 +195,7 @@ public class GUIManager extends JFrame{
                         LinkedList<Bike> bikes = dbManager.getBikes();
                         jListDisplay(bikes);
                         mileageTextField.setText("");
+                        displayPicture("Title Image.png");
                         }
                 }else{
                     displayErrorMessage("Please select a bike from the list to update");
