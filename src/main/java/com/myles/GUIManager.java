@@ -143,6 +143,7 @@ public class GUIManager extends JFrame{
                 int index = bikeList.getSelectedIndex();
                 if(index != -1){
                     Bike selectedBike = bikeList.getSelectedValue();
+                    //making sure you intended to delete a bike
                     int sure = yesNoDialog("Are you sure you want to delete this bike?\n" + selectedBike);
                     if(sure == JOptionPane.YES_OPTION){
                         int id = selectedBike.getId();
@@ -271,10 +272,12 @@ public class GUIManager extends JFrame{
         pictureLabel.setIcon(bikeIcon);
     }
 
+    //method used to display error messages
     private void displayErrorMessage(String message){
         JOptionPane.showMessageDialog(this, message);
     }
 
+    //method used to display confirmation messages
     private int yesNoDialog(String message) {
         return JOptionPane.showConfirmDialog(this, message, null, JOptionPane.YES_NO_OPTION);
     }
