@@ -9,7 +9,7 @@ public class DBManager {
     static final String JDBC_DRIVER = "org.sqlite.JDBC";
 
     //Schema for the bike table: bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4), Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100));
-    //CREATE TABLE IF NOT EXISTS ? (Date varchar(10), Type varchar(7), Serviced_By varchar(50), Parts varchar(), Description varchar(200) )
+    //CREATE TABLE IF NOT EXISTS ? (Date varchar(10), Type varchar(7), Serviced_By varchar(50), Parts varchar(), Description varchar(200))
     //Type can be service or repair hence 7 character length
 
     //method that adds bike to the database
@@ -115,7 +115,7 @@ public class DBManager {
 
             String getAll = "SELECT * FROM ? ORDER BY Date DESC";
             PreparedStatement prepStatement = connection.prepareStatement(getAll);
-            prepStatement.setInt(1, id);
+            prepStatement.setString(1, String.valueOf(id));
             ResultSet results = prepStatement.executeQuery(getAll);
 
             while(results.next()){
@@ -133,5 +133,30 @@ public class DBManager {
         }
 
         return records;
+    }
+
+    //method to add maintenance records to database
+    public void addRecord(int id, String date, String type, String servicedBy, String parts, String description){
+        try(Connection connection = DriverManager.getConnection(db_url)){
+            //create table for record if it doesn't already exist
+            String createTable = "CREATE TABLE IF NOT EXISTS ? (Date varchar(10), Type varchar(7), Serviced_By varchar(50), Parts varchar(), Description varchar(200))";
+            PreparedStatement prepStatement = connection.prepareStatement(createTable);
+            prepStatement.setString(1, String.valueOf(id));
+            prepStatement.execute();
+
+            //insert record into the table
+            String insert = "INSERT INTO ? (Date, Type, Serviced_By, Parts, Description) VALUES (?, ?, ?, ?, ?)";
+            prepStatement = connection.prepareStatement(insert);
+            prepStatement.setString(1, String.valueOf(id));
+            prepStatement.setString(2, date);
+            prepStatement.setString(3, type);
+            prepStatement.setString(4, servicedBy);
+            prepStatement.setString(5, parts);
+            prepStatement.setString(6, description);
+            prepStatement.execute();
+
+        }catch(SQLException sqle){
+            sqle.printStackTrace();
+        }
     }
 }
