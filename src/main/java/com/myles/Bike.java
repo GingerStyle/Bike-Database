@@ -34,7 +34,6 @@ public class Bike {
 
     @Override
     public String toString(){
-        String string = year + " " + brand + " " + model + " Color: " + color + " Serial: " + serial + " Mileage: " + mileage;
-        return string;
+        return year + " " + brand + " " + model + " Color: " + color + " Serial: " + serial + " Mileage: " + mileage;
     }
 }
