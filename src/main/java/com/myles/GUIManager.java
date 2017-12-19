@@ -149,7 +149,7 @@ public class GUIManager extends JFrame{
                 if(index != -1){
                     Bike selectedBike = bikeList.getSelectedValue();
                     //making sure you intended to delete a bike
-                    int sure = yesNoDialog("Are you sure you want to delete this bike?\n" + selectedBike);
+                    int sure = yesNoDialog("Are you sure you want to delete this bike, and it's maintenance records?\n" + selectedBike);
                     if(sure == JOptionPane.YES_OPTION){
                         int id = selectedBike.getId();
                         dbManager.deleteBike(id);

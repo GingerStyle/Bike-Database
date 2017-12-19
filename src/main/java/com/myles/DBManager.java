@@ -33,14 +33,20 @@ public class DBManager {
     }
 
     //method that deletes bikes from the database
-    public void deleteBike(int id){//todo add code to delete maintenance record table when bike is deleted
+    public void deleteBike(int id){
 
         try (Connection connection = DriverManager.getConnection(db_url)){
-
+            //delete bike from database
             String delete = "DELETE FROM bike WHERE id = ?";
             PreparedStatement prepStatement = connection.prepareStatement(delete);
             prepStatement.setInt(1, id);
             prepStatement.executeUpdate();
+
+            //delete maintenance record table associated with the bike
+            String dropTable = "DROP TABLE IF EXISTS ?";
+            prepStatement = connection.prepareStatement(dropTable);
+            prepStatement.setString(1, String.valueOf(id));
+            prepStatement.execute();
 
         }catch(SQLException sqle){
             sqle.printStackTrace();
@@ -113,7 +119,7 @@ public class DBManager {
         LinkedList<Records> records = new LinkedList<>();
         try(Connection connection = DriverManager.getConnection(db_url)){
 
-            String getAll = "SELECT * FROM ? ORDER BY Date DESC";
+            String getAll = "SELECT * FROM ? ORDER BY Date ASC";
             PreparedStatement prepStatement = connection.prepareStatement(getAll);
             prepStatement.setString(1, String.valueOf(id));
             ResultSet results = prepStatement.executeQuery(getAll);
