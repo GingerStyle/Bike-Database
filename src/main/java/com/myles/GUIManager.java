@@ -34,8 +34,8 @@ public class GUIManager extends JFrame{
     protected JButton deleteRecordButton;
     protected JPanel maintenancePanel;
 
-    private DefaultListModel listModel;
-    private DefaultListModel maintenanceListModel;
+    private DefaultListModel<Bike> listModel;
+    private DefaultListModel<Records> maintenanceListModel;
 
     private DBManager dbManager = new DBManager();
 
@@ -267,7 +267,7 @@ public class GUIManager extends JFrame{
         }
     }
 
-    //gets list of maintenance records and displays them
+    //gets list of maintenance records from DBManager.getRecords() and displays them
     protected void maintenanceListDisplay(LinkedList<Records> records){
         maintenanceListModel.clear();
         for(Records x : records){

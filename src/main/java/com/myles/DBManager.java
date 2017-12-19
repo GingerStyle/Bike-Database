@@ -106,4 +106,32 @@ public class DBManager {
             sqle.printStackTrace();
         }
     }
+
+    //get maintenance records from the database based on which bike was selected. Then creates Records objects and sends them to
+    //GUIManager.maintenanceListDisplay() to display them
+    public LinkedList<Records> getRecords(int id){
+        LinkedList<Records> records = new LinkedList<>();
+        try(Connection connection = DriverManager.getConnection(db_url)){
+
+            String getAll = "SELECT * FROM ? ORDER BY Date DESC";
+            PreparedStatement prepStatement = connection.prepareStatement(getAll);
+            prepStatement.setInt(1, id);
+            ResultSet results = prepStatement.executeQuery(getAll);
+
+            while(results.next()){
+                String date = results.getString("Date");
+                String type = results.getString("Type");
+                String servicedBy = results.getString("Serviced_By");
+                String parts = results.getString("Parts");
+                String description = results.getString("Description");
+                Records record = new Records(date, type, servicedBy, parts, description);
+                records.add(record);
+            }
+
+        }catch(SQLException sqle){
+            sqle.printStackTrace();
+        }
+
+        return records;
+    }
 }
