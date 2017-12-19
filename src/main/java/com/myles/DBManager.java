@@ -33,7 +33,7 @@ public class DBManager {
     }
 
     //method that deletes bikes from the database
-    public void deleteBike(int id){
+    public void deleteBike(int id){//todo add code to delete maintenance record table when bike is deleted
 
         try (Connection connection = DriverManager.getConnection(db_url)){
 
