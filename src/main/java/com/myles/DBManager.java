@@ -9,7 +9,7 @@ public class DBManager {
     static final String JDBC_DRIVER = "org.sqlite.JDBC";
 
     //Schema for the bike table: bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4), Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100));
-    //CREATE TABLE IF NOT EXISTS ? (Date varchar(10), Type varchar(7), Serviced_By varchar(50), Parts varchar(), Description varchar(200))
+    //CREATE TABLE IF NOT EXISTS ? (Date varchar(10), Type varchar(7), Serviced_By varchar(50), Parts varchar(100), Description varchar(200), Mileage varchar(6))
     //Type can be service or repair hence 7 character length
 
     //method that adds bike to the database
@@ -130,7 +130,8 @@ public class DBManager {
                 String servicedBy = results.getString("Serviced_By");
                 String parts = results.getString("Parts");
                 String description = results.getString("Description");
-                Records record = new Records(date, type, servicedBy, parts, description);
+                String mileage = results.getString("Mileage");
+                Records record = new Records(date, type, servicedBy, parts, description, mileage);
                 records.add(record);
             }
 
@@ -142,16 +143,16 @@ public class DBManager {
     }
 
     //method to add maintenance records to database
-    public void addRecord(int id, String date, String type, String servicedBy, String parts, String description){
+    public void addRecord(int id, String date, String type, String servicedBy, String parts, String description, String mileage){
         try(Connection connection = DriverManager.getConnection(db_url)){
             //create table for record if it doesn't already exist
-            String createTable = "CREATE TABLE IF NOT EXISTS ? (Date varchar(10), Type varchar(7), Serviced_By varchar(50), Parts varchar(), Description varchar(200))";
+            String createTable = "CREATE TABLE IF NOT EXISTS ? (Date varchar(10), Type varchar(7), Serviced_By varchar(50), Parts varchar(100), Description varchar(200), Mileage varchar(6))";
             PreparedStatement prepStatement = connection.prepareStatement(createTable);
             prepStatement.setString(1, String.valueOf(id));
             prepStatement.execute();
 
             //insert record into the table
-            String insert = "INSERT INTO ? (Date, Type, Serviced_By, Parts, Description) VALUES (?, ?, ?, ?, ?)";
+            String insert = "INSERT INTO ? (Date, Type, Serviced_By, Parts, Description) VALUES (?, ?, ?, ?, ?, ?)";
             prepStatement = connection.prepareStatement(insert);
             prepStatement.setString(1, String.valueOf(id));
             prepStatement.setString(2, date);
@@ -159,6 +160,7 @@ public class DBManager {
             prepStatement.setString(4, servicedBy);
             prepStatement.setString(5, parts);
             prepStatement.setString(6, description);
+            prepStatement.setString(7, mileage);
             prepStatement.execute();
 
         }catch(SQLException sqle){
