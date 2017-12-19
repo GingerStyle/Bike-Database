@@ -9,7 +9,7 @@ public class DBManager {
     static final String JDBC_DRIVER = "org.sqlite.JDBC";
 
     //Schema for the bike table: bike (id INTEGER PRIMARY KEY AUTOINCREMENT, Brand varchar(20), Model varchar(20), Year varchar(4), Serial varchar(30), Color varchar(20), Mileage double, Photo varchar(100));
-    //CREATE TABLE IF NOT EXISTS ? (Date varchar(10), Type varchar(7), Serviced_By varchar(50), Description varchar(200), Parts varchar())
+    //CREATE TABLE IF NOT EXISTS ? (Date varchar(10), Type varchar(7), Serviced_By varchar(50), Parts varchar(), Description varchar(200) )
     //Type can be service or repair hence 7 character length
 
     //method that adds bike to the database

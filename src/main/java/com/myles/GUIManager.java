@@ -29,12 +29,13 @@ public class GUIManager extends JFrame{
     protected JLabel pictureLabel;
     protected JButton addPhotoButton;
     //maintenance panel elements
-    protected JList maintenanceRecordList;
+    protected JList<Records> maintenanceRecordList;
     protected JButton addRecordButton;
     protected JButton deleteRecordButton;
     protected JPanel maintenancePanel;
 
     private DefaultListModel listModel;
+    private DefaultListModel maintenanceListModel;
 
     private DBManager dbManager = new DBManager();
 
@@ -47,10 +48,14 @@ public class GUIManager extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-
+        //setting up list models
         listModel = new DefaultListModel<Bike>();
         bikeList.setModel(listModel);
         bikeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        maintenanceListModel = new DefaultListModel<Records>();
+        maintenanceRecordList.setModel(maintenanceListModel);
+        maintenanceRecordList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //controls what happens when you press the add bike button
         addButton.addActionListener(new ActionListener() {
@@ -259,6 +264,14 @@ public class GUIManager extends JFrame{
         listModel.clear();
         for(Bike x : bikes){
             listModel.addElement(x);
+        }
+    }
+
+    //gets list of maintenance records and displays them
+    protected void maintenanceListDisplay(LinkedList<Records> records){
+        maintenanceListModel.clear();
+        for(Records x : records){
+            maintenanceListModel.addElement(x);
         }
     }
 
