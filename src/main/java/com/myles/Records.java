@@ -20,7 +20,7 @@ public class Records {
 
     @Override
     public String toString(){
-        String string = ""; //todo finish string
+        String string = date + " " + type + " " + parts + " Mileage: " + mileage + " Desc: " + description + " Serviced By: " + servicedBy;
         return string;
     }
 }
