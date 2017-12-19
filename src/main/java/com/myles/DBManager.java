@@ -144,6 +144,7 @@ public class DBManager {
 
     //method to add maintenance records to database
     public void addRecord(int id, String date, String type, String servicedBy, String parts, String description, String mileage){
+
         try(Connection connection = DriverManager.getConnection(db_url)){
             //create table for record if it doesn't already exist
             String createTable = "CREATE TABLE IF NOT EXISTS ? (Date varchar(10), Type varchar(7), Serviced_By varchar(50), Parts varchar(100), Description varchar(200), Mileage varchar(6))";
@@ -152,7 +153,7 @@ public class DBManager {
             prepStatement.execute();
 
             //insert record into the table
-            String insert = "INSERT INTO ? (Date, Type, Serviced_By, Parts, Description) VALUES (?, ?, ?, ?, ?, ?)";
+            String insert = "INSERT INTO ? (Date, Type, Serviced_By, Parts, Description, Mileage) VALUES (?, ?, ?, ?, ?, ?)";
             prepStatement = connection.prepareStatement(insert);
             prepStatement.setString(1, String.valueOf(id));
             prepStatement.setString(2, date);
