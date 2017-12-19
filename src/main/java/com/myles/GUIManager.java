@@ -237,7 +237,7 @@ public class GUIManager extends JFrame{
         });
 
         //displays the stored picture when you click on a bike in the list
-        bikeList.addListSelectionListener(new ListSelectionListener() {
+        bikeList.addListSelectionListener(new ListSelectionListener() {//todo add code to display the maintenance records for the selected bike
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 Bike selectedBike = bikeList.getSelectedValue();
