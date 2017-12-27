@@ -260,6 +260,28 @@ public class GUIManager extends JFrame{
             }
         });
 
+        //opens the MaintRecord window
+        addRecordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //make sure something is selected
+                int index = bikeList.getSelectedIndex();
+                if(index != -1) {
+                    MaintRecordGUI maintRecordGUI = new MaintRecordGUI();
+                }else{
+                    displayErrorMessage("Please select a bike to add a record to");
+                }
+            }
+        });
+
+        //deletes a record from the database
+        deleteRecordButton.addActionListener(new ActionListener() {//todo finish this
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
     }
 
     //gets list of bike objects from DBManager.getBikes() and displays them
@@ -279,7 +301,7 @@ public class GUIManager extends JFrame{
     }
 
     //used to handle scaling and displays pictures
-    protected void displayPicture(String filePath){
+    protected void displayPicture(String filePath){//todo get photo metadata to orient and scale photo properly
         //clear picture
         pictureLabel.setText("");
         pictureLabel.setIcon(null);

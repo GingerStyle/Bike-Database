@@ -12,7 +12,7 @@ public class MaintRecordGUI extends JFrame{
     protected JPanel mainPanel;
     protected JSpinner dateSpinner;
     protected JComboBox<String> typeComboBox;
-    protected JTextField ServicedByTextField;
+    protected JTextField servicedByTextField;
     protected JTextField partsTextField;
     protected JTextField descriptionTextField;
     protected JTextField mileageTextField;
@@ -37,18 +37,30 @@ public class MaintRecordGUI extends JFrame{
 
         dateSpinner.setModel(new SpinnerDateModel());
 
-        addButton.addActionListener(new ActionListener() {//todo finish this
+        //when user clicks the add button it gets the input from all the fields and adds it to the database
+        addButton.addActionListener(new ActionListener() {//todo finish this, and add input validation
             @Override
             public void actionPerformed(ActionEvent e) {
+                //getting user input
                 Date date = (Date)dateSpinner.getModel().getValue();
+                Object selected = typeComboBox.getSelectedItem();
+                String servicedBy = servicedByTextField.getText();
+                String parts = partsTextField.getText();
+                String description = descriptionTextField.getText();
+                String mileage = mileageTextField.getText();
+                //adding user input to the database
+
+                //clearing text fields
 
             }
         });
 
-        cancelButton.addActionListener(new ActionListener() {//todo finish this
+        //when the user clicks the cancel button it clears the text fields and hides the window
+        cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //hiding window
+                setVisible(false);
             }
         });
 
