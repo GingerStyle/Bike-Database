@@ -236,14 +236,14 @@ public class GUIManager extends JFrame{
             }
         });
 
-        //displays the stored picture when you click on a bike in the list
-        bikeList.addListSelectionListener(new ListSelectionListener() {//todo add code to display the maintenance records for the selected bike
+        //displays the stored picture and maintenance records when you click on a bike in the list
+        bikeList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 Bike selectedBike = bikeList.getSelectedValue();
                 if(selectedBike == null) {return;}
                 String path = selectedBike.getPath();
-
+                int bike = selectedBike.getId();
                 //checking that there is a file path in the database and that the file exists
                 if(path == null){
                     pictureLabel.setIcon(null);
@@ -254,6 +254,9 @@ public class GUIManager extends JFrame{
                 }else{
                     displayPicture(path);
                 }
+                //getting the maintenance records to display
+                LinkedList<Records> records = dbManager.getRecords(bike);
+                maintenanceListDisplay(records);
             }
         });
 
